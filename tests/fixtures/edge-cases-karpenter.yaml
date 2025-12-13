@@ -1,0 +1,106 @@
+---
+apiVersion: karpenter.sh/v1beta1
+kind: Provisioner
+metadata:
+  name: label-spot-prov
+spec:
+  consolidation:
+    enabled: true
+  ttlSecondsAfterEmpty: 300
+  requirements:
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: ["spot"]
+    - key: node.kubernetes.io/instance-type
+      operator: In
+      values: ["m6g.large"]
+    - key: kubernetes.io/arch
+      operator: In
+      values: ["arm64"]
+
+---
+apiVersion: karpenter.sh/v1beta1
+kind: Provisioner
+metadata:
+  name: np-weird-ttl
+spec:
+  consolidation:
+    enabled: true
+  # Very long TTL → should be LOW severity TTL issue
+  ttlSecondsAfterEmpty: 7200
+  requirements:
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: ["on-demand"]
+    - key: node.kubernetes.io/instance-type
+      operator: In
+      values: ["m5.large"]
+
+---
+apiVersion: karpenter.sh/v1beta1
+kind: Provisioner
+metadata:
+  name: prov-ttl-never
+spec:
+  consolidation:
+    enabled: false
+  # No ttlSecondsAfterEmpty at all → MEDIUM severity TTL issue
+  requirements:
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: ["on-demand"]
+    - key: node.kubernetes.io/instance-type
+      operator: In
+      values: ["c5.large"]
+
+---
+apiVersion: karpenter.sh/v1beta1
+kind: Provisioner
+metadata:
+  name: np-missing-graviton-and-spot
+spec:
+  consolidation:
+    enabled: false
+  ttlSecondsAfterEmpty: 300
+  # On-demand, non-Graviton → medium Graviton issue, high Spot issue
+  requirements:
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: ["on-demand"]
+    - key: node.kubernetes.io/instance-type
+      operator: In
+      values: ["m5.large"]
+
+---
+apiVersion: karpenter.k8s.aws/v1beta1
+kind: EC2NodeClass
+metadata:
+  name: minimal-ec2-class
+spec:
+  # Intentionally minimal and missing instanceProfile → high IAM issue
+  amiSelectorTerms:
+    - id: "ami-0fedcba9876543210"
+  subnetSelectorTerms:
+    - tags:
+        Name: "private-a"
+  securityGroupSelectorTerms:
+    - tags:
+        Name: "eks-nodes-a"
+  # instanceProfile omitted on purpose
+
+---
+apiVersion: karpenter.k8s.aws/v1beta1
+kind: EC2NodeClass
+metadata:
+  name: missing-profile-ec2-class
+spec:
+  # Another nodeclass with no instanceProfile configured
+  amiSelectorTerms:
+    - id: "ami-0aaabbbcccdddeee0"
+  subnetSelectorTerms:
+    - tags:
+        Name: "private-b"
+  securityGroupSelectorTerms:
+    - tags:
+        Name: "eks-nodes-b"
+  # instanceProfile omitted on purpose
