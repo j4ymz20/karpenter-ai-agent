@@ -1,125 +1,60 @@
 # Karpenter AI Agent
 
-**Karpenter AI Agent** is an open-source analysis and optimization tool for Kubernetes clusters using **Karpenter**. It evaluates Provisioners, NodePools, and EC2NodeClasses to detect misconfigurations, cost inefficiencies, and operational risks using deterministic rules, then optionally generates an AI-assisted natural-language summary.
+## Overview
+Karpenter AI Agent is an open-source analysis and optimization tool for Kubernetes clusters that use Karpenter on AWS. It ingests Provisioner, NodePool, and EC2NodeClass manifests, applies deterministic static rules to detect correctness gaps and efficiency issues, and (optionally) produces an AI-generated natural-language summary strictly based on the rule results. The agent exposes a FastAPI web interface so platform teams can upload YAML, review findings, and download remediation snippets in one place.
 
-The core analysis is fully deterministic and does **not** require an LLM. AI summaries are an optional enhancement.
+All rule logic is deterministic and testable; AI output is an optional enhancement. The project is released under the MIT License.
 
----
-
-## Key Capabilities
-
-### Configuration Analysis
-- Parses Karpenter **Provisioner**, **NodePool**, and **EC2NodeClass** resources
-- Safe YAML parsing with edge-case handling
-- Cross-resource validation (NodePool ↔ EC2NodeClass)
-
-### Rule-Based Detection
-- Spot capacity usage
-- Consolidation enablement
-- Graviton (ARM64) adoption
-- `ttlSecondsAfterEmpty` configuration
-- EC2NodeClass IAM, subnet, and security group checks
-
-### AI-Assisted Summary (Optional)
-- Natural-language explanation of findings
-- Ordered by severity and impact
-- Designed to complement—not replace—deterministic rules
-
-### Remediation Guidance
-- Suggested YAML patch snippets per issue
-- Copy-to-clipboard support
-- Designed for **manual review before applying**
-
-### Web Interface
-- FastAPI backend
-- Dark-mode UI
-- Health score visualization
-- Structured issue cards with recommendations
-
-### Testing
-- Pytest-based test suite
-- Edge-case Karpenter YAML fixtures
-
----
+## Features
+- **Robust YAML parsing** – Handles multi-document uploads, Provisioners, NodePools, and EC2NodeClasses with defensive parsing for edge cases.
+- **Deterministic rule engine** – Checks Spot adoption, consolidation configuration, Graviton coverage, `ttlSecondsAfterEmpty`, and EC2NodeClass IAM/subnet/security-group settings.
+- **Actionable issue output** – Severity-tagged findings with human-readable recommendations, health score summary, and ready-to-apply YAML patch snippets (copy-to-clipboard in the UI).
+- **Optional AI summary** – Groq-backed natural-language synopsis of the deterministic findings; never used for core logic.
+- **Modern web UI** – FastAPI + Jinja templates with dark theme, structured cards, and health score visualization.
+- **Test coverage + CI** – Pytest fixtures for rules/edge cases plus GitHub Actions that run pytest and pip-audit on every push and pull request.
 
 ## Installation
-
-Clone the repository:
-
 ```bash
 git clone https://github.com/matt-e-builds/karpenter-ai-agent.git
 cd karpenter-ai-agent
-```
-
-Create and activate a virtual environment:
-
-```bash
 python3 -m venv .venv
 source .venv/bin/activate
-```
-
-Install dependencies:
-
-```bash
 pip install -r requirements.txt
 ```
 
-(Optional) Enable AI summaries:
-
+Optional: enable AI summaries by providing a Groq key.
 ```bash
 export GROQ_API_KEY="your_groq_api_key_here"
 ```
+If the variable is unset, the application still runs; AI summaries are simply disabled.
 
-> The application works fully without an API key; AI summaries will simply be disabled.
-
----
-
-## Running the Application
-
+## Running the App
 ```bash
 python main.py
 ```
-
-Then open:
-
-```
-http://127.0.0.1:5000
-```
-
----
+Then open http://127.0.0.1:5000 and upload one or more Karpenter YAML files.
 
 ## Project Structure
-
 ```text
 karpenter-ai-agent/
-├── main.py
-├── parser.py
-├── rules.py
-├── models.py
-├── llm_client.py
-├── templates/
+├── main.py             # FastAPI entrypoint
+├── parser.py           # YAML parsing helpers
+├── rules.py            # Deterministic rule engine + scoring
+├── models.py           # Dataclasses for configs and issues
+├── llm_client.py       # Optional Groq integration for summaries
+├── templates/          # Jinja2 templates for form/results
+├── static/             # Static assets (CSS/JS)
 ├── tests/
-│   ├── fixtures/
-│   └── test_rules.py
-├── README.md
-└── ROADMAP.md
+│   ├── fixtures/       # Sample Provisioner / NodePool / NodeClass YAML
+│   └── test_rules.py   # Rule + summary tests
+├── requirements.txt
+├── pyproject.toml
+└── README.md
 ```
 
----
-
 ## License
-
-MIT License
-
----
-
-## Roadmap
-
-See [ROADMAP.md](./ROADMAP.md) for planned open-source enhancements, including expanded rule coverage, scoring improvements, reporting, and UX refinements.
-
----
+MIT License. See [LICENSE](./LICENSE) for details.
 
 ## Maintainer
-
-Maintained by **Matt E**  
+Maintained by **Matt E.**  
 GitHub: https://github.com/matt-e-builds
