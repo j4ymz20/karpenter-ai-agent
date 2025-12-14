@@ -1,9 +1,8 @@
-import os
 import sys
 from pathlib import Path
 
 # Ensure project root is on sys.path so "import parser" etc. work
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -11,7 +10,7 @@ from parser import parse_provisioner_yaml  # type: ignore
 from models import ProvisionerConfig, EC2NodeClassConfig  # type: ignore
 
 
-FIXTURES = Path(__file__).parent / "fixtures"
+FIXTURES = Path(__file__).resolve().parent
 
 
 def _read_fixture(name: str) -> str:
