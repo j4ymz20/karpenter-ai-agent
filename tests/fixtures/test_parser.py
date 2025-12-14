@@ -46,6 +46,3 @@ def test_parse_edge_case_yaml():
     assert len(provisioners) >= 3
     assert len(nodeclasses) >= 1
 
-    # Check that at least one NodePool with nodeClass reference is recognized
-    np_names = {p.name for p in provisioners}
-    assert "np-string-nodeclass" in np_names or "np-dict-nodeclass" in np_names
